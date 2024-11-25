@@ -59,9 +59,53 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+  // window.addEventListener('keydown', function(e){
+  //   // console.log(e.keyCode);
+  //   // map key to audio
+  //   const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`); // using document.quterSeletor to get 1 element that matches the query
+  //   const key = document.querySelector(`.key[data-key="${e.keyCode}"]`); // gets the key that was pressed
+  //   // console.log(audio);
+  //   if(!audio) return; // if other keys are pressed stop this function
+  //   audio.currentTime = 0; //rewind to the start. this wil help to play when we hit the key continuesly
+  //   audio.play();
+  //   key.classList.add('playing'); // Add playing class to the key pressed to show the new style and transisition
+
+  //   //transion / style should be removed once teh transitin ends else, the yellow border will stay on the jey pressed for ever.
+  //   //add a even lister for the keys in the dom listen for teh 'transtionend'  event and remove the playing class for that key
+
+  //   //function to removeTransition
+  //   function removeTransition(e){
+  //     // console.log(e); // Multiple transformation happen in this case. Black to yello border, scale, box-shadow etc
+  //     if(e.propertyName !== "transform") return; //ignore ther tranformantions 
+  //     // console.log(e.propertyName);
+  //     this.classList.remove('playing'); //this is whatever that gets called against it. in this case addEventLister for transistionend was called against the key press
+  //   }
+
+  //   const keys = document.querySelectorAll(`.key`); // using querySelectorAll() to get all the elemenst that match the query
+  //   // console.log(keys); 
+  //   //add eventListener for all keys
+  //   keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
+  // })
+  function playSound(e){
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+    if(!audio) return;
+    audio.currentTime=0;
+    audio.play();
+    key.classList.add('playing');
+  }
+
+  function removeTransition(e){
+    console.log(e);
+    if(e.propertyName !== 'transform') return;
+    this.classList.remove('playing');
+  }
+
+  const keys = document.querySelectorAll('.key');
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+  window.addEventListener('keydown', playSound);
 
 </script>
-
-
 </body>
 </html>
